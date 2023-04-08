@@ -25,6 +25,14 @@ class Board
     Cell.new(cell_name)
   end
 
+  def valid_coordinate?(coordinate)
+    if @cells.include?(coordinate)
+      true
+    else
+      false
+    end
+  end
+
   # def new_board
   #   @a_board = Hash.new   
   #   ('A'..'D').each do |letter|
