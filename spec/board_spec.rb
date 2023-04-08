@@ -22,4 +22,15 @@ RSpec.describe Board do
       expect(@board.cells["D3"]).to be_a(Cell)
     end
   end
+
+  describe '#validates coordinates' do
+    it 'is a coordinate on the board' do
+      
+      expect(@board.valid_coordinate?("A1")).to eq(true)
+      expect(@board.valid_coordinate?("D4")).to eq(true)
+      expect(@board.valid_coordinate?("A5")).to eq(false)
+      expect(@board.valid_coordinate?("E1")).to eq(false)
+      expect(@board.valid_coordinate?("A22")).to eq(false)
+    end
+  end
 end
