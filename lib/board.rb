@@ -47,4 +47,12 @@ class Board
     (num.uniq.size == 1 && ord.each_cons(2).all? { |x,y| y == x + 1}))) &&
     (coordinates.all? {|cell| @cells[cell].empty?})
   end
+
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates) == true
+      coordinates.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
+      end
+    end
+  end
 end
