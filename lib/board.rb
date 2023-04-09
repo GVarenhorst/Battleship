@@ -33,13 +33,18 @@ class Board
     end
   end
 
-  # def new_board
-  #   @a_board = Hash.new   
-  #   ('A'..'D').each do |letter|
-  #       (1..4).each do |i|
-  #           @a_board["#{letter}#{i}"] = Cell.new("#{letter}#{i}")
-  #           # print @board["#{letter}#{i}"]
-  #       end
-  #   end
-  # end
+  def valid_placement?(ship, coordinates)
+    coordinate_letters = coordinates.map { |coord| coord[0] }
+    coordinate_numbers = coordinates.map { |coord| coord[1] }
+
+    ord = coordinate_letters.map(&:ord)
+    num = coordinate_numbers.map(&:to_i)
+
+    (ship.length == 2 && coordinates.length == 2 ||
+    ship.length == 3 && coordinates.length == 3) &&
+    (((coordinate_letters.uniq.size == 1 &&
+    (num.each_cons(2).all? { |x,y| y == x + 1})) ||
+    (num.uniq.size == 1 && ord.each_cons(2).all? { |x,y| y == x + 1}))) &&
+    (coordinates.all? {|cell| @cells[cell].empty?})
+  end
 end
