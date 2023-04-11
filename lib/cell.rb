@@ -36,17 +36,17 @@ class Cell
   end
 
   def render(view = false)
-    if view == false && @fired_upon == false  
-      "."
-    elsif view == true && @fired_upon == false
+    if @ship != nil && @fired_upon == true && @ship.sunk? 
+      "X"
+    elsif @ship != nil && @fired_upon == true
+      "H"
+    elsif view == true && @fired_upon == false && @ship != nil
       "S"
     elsif @fired_upon == true && @ship == nil
       "M"
-    elsif @ship.sunk? 
-      "X"
-    else   
-      @ship != nil && @fired_upon == true
-      "H"
+    else
+      view == false && @fired_upon == false  
+      "."
     end
   end
 end

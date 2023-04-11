@@ -55,4 +55,44 @@ class Board
       end
     end
   end
+
+  def render(view_ships = false)
+    if view_ships == false
+      "  1 2 3 4 \nA #{@cells["A1"].render} #{@cells["A2"].render} #{@cells["A3"].render} #{@cells["A4"].render} \nB #{@cells["B1"].render} #{@cells["B2"].render} #{@cells["B3"].render} #{@cells["B4"].render} \nC #{@cells["C1"].render} #{@cells["C2"].render} #{@cells["C3"].render} #{@cells["C4"].render} \nD #{@cells["D1"].render} #{@cells["D2"].render} #{@cells["D3"].render} #{@cells["D4"].render} \n"
+    else
+      "  1 2 3 4 \nA #{@cells["A1"].render(true)} #{@cells["A2"].render(true)} #{@cells["A3"].render(true)} #{@cells["A4"].render(true)} \nB #{@cells["B1"].render(true)} #{@cells["B2"].render(true)} #{@cells["B3"].render(true)} #{@cells["B4"].render(true)} \nC #{@cells["C1"].render(true)} #{@cells["C2"].render(true)} #{@cells["C3"].render(true)} #{@cells["C4"].render(true)} \nD #{@cells["D1"].render(true)} #{@cells["D2"].render(true)} #{@cells["D3"].render(true)} #{@cells["D4"].render(true)} \n"
+    end
+  end
 end
+
+# board_rows = [[], [], [], []]
+# @cells.each do |coordinate, value|
+#   if value.coordinate.start_with?("A")
+#     board_rows[0] << value
+#   elsif coordinate.start_with?("B")
+#     board_rows[1] << value
+#   elsif coordinate.start_with?("C")
+#     board_rows[2] << value
+#   else
+#     coordinate.start_with?("D")
+#     board_rows[3] << value
+#   end 
+# end
+# rendered_board = []
+# board_rows.each do |row|
+#   row.each do |value|
+#     rendered_board << value.render
+#   end
+#   print rendered_board
+# end
+# require 'pry'; binding.pry
+
+# group_array = @cells.map {|cell, value| @cells[cell]}
+# group_array.each_slice(4) do |row| 
+#   row.each_with_index do |coord, index|
+#     if index == 3 || index == 7 || index == 11
+#       print coord.render "\n" 
+#     else
+#       print coord.render
+#     end
+#   end
