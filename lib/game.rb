@@ -1,7 +1,14 @@
+require 'board'
 class Game
   attr_reader :menu
   def initialize
-      end
+    @comp_submarine = Ship.new("submarine", 2)
+    @comp_cruiser = Ship.new("cruiser", 3)
+    @human_submarine = Ship.new("submarine", 2)
+    @human_cruiser = Ship.new("cruiser", 3)
+    @comp_board = Board.new
+  end
+  
 
   def menu
     puts "Welcome to BATTLESHIP"
@@ -14,19 +21,22 @@ class Game
     end
   end
 
-  def setup
+  # def setup
 
-    SecureRandom.place_ship
-    if ship.valid_placement? == true
-      render.ship
+  #   SecureRandom.place_ship
+  #   if ship.valid_placement? == true
+  #     render.ship
+  #   end
+  # end  
+
+  def place_comp_submarine
+    cells_keys = @comp_board.cells.keys.sample(2)
+    until @comp_board.place(@comp_submarine, cells_keys) do  
+      place_comp_submarine
+
     end
-  end  
-
-  def place_comp_ships
-    comp_submarine = Ship.new("submarine", 2)
-    comp_cruiser = Ship.new("cruiser", 3)
     # randomly select coordinates from @cells hash and then call comp_submarine.place && comp_cruiser.place method
-    rand(@cells)
+    
 
     
   end
