@@ -95,21 +95,32 @@ class Game
   def display_boards
     puts "========COMP BOARD========"
     puts @comp_board.render  
-    puts"========HUMAN BOARD========"
-    puts@human_board.render(true)
+    puts "========HUMAN BOARD========"
+    puts @human_board.render(true)
   end
 
   def comp_turn
     puts "Time for me to take my shot!"
     human_keys = @human_board.cells.keys
-    target = human_keys.sample(1)
-    human_keys.delete(target[0])
+    target = human_keys.sample(1).join
+    until @human_board.cells[target].fired_upon? == false
+      target = human_keys.sample(1)
+    end
+    @human_board.cells[target].fire_upon
     
-    require 'pry'; binding.pry
   end
 
   def human_turn
     puts "Now for you to take your best shot!"
+    target = gets.chomp.upcase
+    until @comp_board.valid_coordinate?(target) && @comp_board.cells[target].fired_upon? == false
+      puts "Sorry, that's an invalid coordinate. Please try again: "
+      target = gets.chomp.upcase
+    end
+    @comp_board.cells[target].fire_upon
+  end
+
+  def return_shots
 
   end
 end
