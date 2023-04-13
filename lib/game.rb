@@ -16,8 +16,8 @@ class Game
   def menu
     puts "Welcome to BATTLESHIP"
     puts "Enter p to play. Enter q to quit"
-    p_or_q = gets
-    if p_or_q == p
+    p_or_q = gets.chomp
+    if p_or_q == "p"
       setup
     else
       exit
@@ -29,6 +29,7 @@ class Game
     place_comp_submarine
     place_human_cruiser
     place_human_submarine
+    end_game
   end  
 
   def place_comp_submarine
@@ -105,22 +106,24 @@ class Game
     puts "Time for me to take my shot!"
     human_keys = @human_board.cells.keys
     target = human_keys.sample(1).join
-    until @human_board.cells[target].fired_upon? == false
+    until @human_board.cells[target].fired_upon? == false && @human_board.valid_coordinate?(target) do
       target = human_keys.sample(1)
     end
     @human_board.cells[target].fire_upon
     return_shots(target)
+    check_for_sunk_ships(target)
   end
 
   def human_turn
     puts "Now for you to take your best shot!"
     target = gets.chomp.upcase
-    until @comp_board.valid_coordinate?(target) && @comp_board.cells[target].fired_upon? == false
-      puts "Sorry, that's an invalid coordinate. Please try again: "
+    until @comp_board.valid_coordinate?(target) && @comp_board.cells[target].fired_upon? == false do
+      puts "That coordinate has been fired upon already. Please try again: "
       target = gets.chomp.upcase
     end
     @comp_board.cells[target].fire_upon
     return_shots(target)
+    check_for_sunk_ships(target)
   end
 
   def return_shots(last_shot)
@@ -139,13 +142,32 @@ class Game
     end
   end
 
-  def check_for_sunk_ships
+  def check_for_sunk_ships(last_shot)
+    if @comp_board.cells[last_shot].render == "X"
+      @comp_sunk_ships += 1
+    elsif @human_board.cells[last_shot].render == "X"
+      @human_sunk_ships += 1
+    end 
 
+    if @comp_sunk_ships == 2 || @human_sunk_ships == 2
+      end_game
+    end
   end
+
+  def end_game
+    until @comp_sunk_ships == 2 || @human_sunk_ships == 2 do
+      display_boards
+      comp_turn
+      display_boards
+      human_turn
+    end
+    if @comp_sunk_ships == 2
+      puts "NOOO, You have beaten me! Try again if you dare!"
+      menu 
+    else
+      puts "MWUAHAHAHA, I have defeated you! Next time, bring a challenge!"
+      menu
+    end
+  end
+
 end
-
-#Trying to decide if menu interaction belongs
-#in menu def or whether menu should be called 
-  #in runner.rb file.
-
-#
