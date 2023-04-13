@@ -56,35 +56,3 @@ class Board
     puts "  1 2 3 4 \n" + "A #{@cells["A1"].render(view_ships)} #{@cells["A2"].render(view_ships)} #{@cells["A3"].render(view_ships)} #{@cells["A4"].render(view_ships)} \n" + "B #{@cells["B1"].render(view_ships)} #{@cells["B2"].render(view_ships)} #{@cells["B3"].render(view_ships)} #{@cells["B4"].render(view_ships)} \n" + "C #{@cells["C1"].render(view_ships)} #{@cells["C2"].render(view_ships)} #{@cells["C3"].render(view_ships)} #{@cells["C4"].render(view_ships)} \n" + "D #{@cells["D1"].render(view_ships)} #{@cells["D2"].render(view_ships)} #{@cells["D3"].render(view_ships)} #{@cells["D4"].render(view_ships)} \n"
   end
 end
-
-# board_rows = [[], [], [], []]
-# @cells.each do |coordinate, value|
-#   if value.coordinate.start_with?("A")
-#     board_rows[0] << value
-#   elsif coordinate.start_with?("B")
-#     board_rows[1] << value
-#   elsif coordinate.start_with?("C")
-#     board_rows[2] << value
-#   else
-#     coordinate.start_with?("D")
-#     board_rows[3] << value
-#   end 
-# end
-# rendered_board = []
-# board_rows.each do |row|
-#   row.each do |value|
-#     rendered_board << value.render
-#   end
-#   print rendered_board
-# end
-# require 'pry'; binding.pry
-
-# group_array = @cells.map {|cell, value| @cells[cell]}
-# group_array.each_slice(4) do |row| 
-#   row.each_with_index do |coord, index|
-#     if index == 3 || index == 7 || index == 11
-#       print coord.render "\n" 
-#     else
-#       print coord.render
-#     end
-#   end
