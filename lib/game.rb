@@ -8,6 +8,8 @@ class Game
     @human_cruiser = Ship.new("cruiser", 3)
     @comp_board = Board.new
     @human_board = Board.new
+    @comp_sunk_ships = 0
+    @human_sunk_ships = 0
   end
   
 
@@ -107,7 +109,7 @@ class Game
       target = human_keys.sample(1)
     end
     @human_board.cells[target].fire_upon
-    
+    return_shots(target)
   end
 
   def human_turn
@@ -118,9 +120,26 @@ class Game
       target = gets.chomp.upcase
     end
     @comp_board.cells[target].fire_upon
+    return_shots(target)
   end
 
-  def return_shots
+  def return_shots(last_shot)
+    if @human_board.cells[last_shot].render == "X"
+      puts "My shot at #{last_shot} sunk your ship! HAHA"
+    elsif @comp_board.cells[last_shot].render == "X"
+      puts "Your shot at #{last_shot} sunk my ship! ARGH"
+    elsif @human_board.cells[last_shot].render == "H"
+      puts "My shot at #{last_shot} was a hit! HAHA"
+    elsif @comp_board.cells[last_shot].render == "H"
+      puts "Your shot at #{last_shot} was a hit! ARGH"
+    elsif @human_board.cells[last_shot].render == "M"
+      puts "My shot at #{last_shot} was a miss! ARGH"
+    else
+      puts "Your shot at #{last_shot} was a miss! HAHA"
+    end
+  end
+
+  def check_for_sunk_ships
 
   end
 end
