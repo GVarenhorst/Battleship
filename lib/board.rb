@@ -36,9 +36,12 @@ class Board
     ord = coordinate_letters.map(&:ord)
     num = coordinate_numbers.map(&:to_i)
 
-    ship_length_equals_coord_length? &&
-    cells_parameter_check? &&
-    ships_dont_overlap?
+    (ship.length == 2 && coordinates.length == 2 ||
+    ship.length == 3 && coordinates.length == 3) &&
+    (((coordinate_letters.uniq.size == 1 &&
+    (num.each_cons(2).all? { |x,y| y == x + 1})) ||
+    (num.uniq.size == 1 && ord.each_cons(2).all? { |x,y| y == x + 1}))) &&
+    (coordinates.all? {|cell| @cells[cell].empty?})
   end
 
   def place(ship, coordinates)
@@ -51,20 +54,5 @@ class Board
 
   def render(view_ships = false)
     puts "  1 2 3 4 \n" + "A #{@cells["A1"].render(view_ships)} #{@cells["A2"].render(view_ships)} #{@cells["A3"].render(view_ships)} #{@cells["A4"].render(view_ships)} \n" + "B #{@cells["B1"].render(view_ships)} #{@cells["B2"].render(view_ships)} #{@cells["B3"].render(view_ships)} #{@cells["B4"].render(view_ships)} \n" + "C #{@cells["C1"].render(view_ships)} #{@cells["C2"].render(view_ships)} #{@cells["C3"].render(view_ships)} #{@cells["C4"].render(view_ships)} \n" + "D #{@cells["D1"].render(view_ships)} #{@cells["D2"].render(view_ships)} #{@cells["D3"].render(view_ships)} #{@cells["D4"].render(view_ships)} \n"
-  end
-
-  def ship_length_equals_coord_length?
-    (ship.length == 2 && coordinates.length == 2 ||
-    ship.length == 3 && coordinates.length == 3)
-  end
-
-  def cells_parameter_check?
-    (((coordinate_letters.uniq.size == 1 &&
-    (num.each_cons(2).all? { |x,y| y == x + 1})) ||
-    (num.uniq.size == 1 && ord.each_cons(2).all? { |x,y| y == x + 1})))
-  end
-
-  def ships_overlap?
-    (coordinates.all? {|cell| @cells[cell].empty?})
   end
 end
