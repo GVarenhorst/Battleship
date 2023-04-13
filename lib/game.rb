@@ -22,19 +22,13 @@ class Game
     end
   end
 
-  # def setup
+  def setup
+    place_comp_cruiser
+    place_comp_submarine
+    place_human_cruiser
+    place_human_submarine
+  end  
 
-  #   SecureRandom.place_ship
-  #   if ship.valid_placement? == true
-  #     render.ship
-  #   end
-  # end  
-
-  # def place_comp_submarine
-  #   cells_keys = @comp_board.cells.keys.sample(2)
-  #   until @comp_board.place(@comp_submarine, cells_keys) do  
-  #     place_comp_submarine
-  #   end
   def place_comp_submarine
     cells_keys = @comp_board.cells.keys.sample(2)
     if @comp_board.valid_placement?(@comp_submarine, cells_keys)
@@ -42,7 +36,6 @@ class Game
     else
       place_comp_submarine
     end
-    cells_keys
   end
 
   def place_comp_cruiser
@@ -57,6 +50,7 @@ class Game
   def place_human_submarine
     puts "I have placed my ships accordingly."
     puts "Time for you to place yours."
+    puts "  1 2 3 4 \n" + "A . . . . \n" + "B . . . . \n" + "C . . . . \n" + "D . . . . \n"
     puts "Choose 2 coordinates for submarine: "
     sub_coords = gets.chomp.upcase.split
     if @human_board.valid_placement?(@human_submarine, sub_coords)
@@ -67,8 +61,8 @@ class Game
   end
   
   def place_human_cruiser
-    puts "I have placed my ships accordingly."
-    puts "Time for you to place yours."
+    puts "Great! Now for your cruiser ship."
+    puts @human_board.render(true)
     puts "Choose 3 coordinates for cruiser: "
     cruiser_coords = gets.chomp.upcase.split()
     if @human_board.valid_placement?(@human_cruiser, cruiser_coords)
@@ -98,9 +92,26 @@ class Game
     end
   end
   
+  def display_boards
+    puts "========COMP BOARD========"
+    puts @comp_board.render  
+    puts"========HUMAN BOARD========"
+    puts@human_board.render(true)
+  end
 
+  def comp_turn
+    puts "Time for me to take my shot!"
+    human_keys = @human_board.cells.keys
+    target = human_keys.sample(1)
+    human_keys.delete(target[0])
+    
+    require 'pry'; binding.pry
+  end
 
-  #if human coordinates are invalid p "Those coordinates are invalid. Please try again." then loop back to .place_human_cruiser/submarine
+  def human_turn
+    puts "Now for you to take your best shot!"
+
+  end
 end
 
 #Trying to decide if menu interaction belongs
